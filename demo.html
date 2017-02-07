@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8"/>
+
+
+<input type="file" name="csvfile"/>
+<input type="button" onclick="csv()" value="JS转换"/>
+
+
+
+<br/><br/><br/>
+<div id="resTbl"></div>
+
+<script src="./lib/jquery.js"></script>
+<script src="./lib/papaparse.js"></script>
+<script src="./lib/jschardet.js"></script>
+<!--[if lte IE 9]>
+<script src="./lib/base64.js"></script>
+<![endif]-->
+
+<script src="csv2arr.js"></script>
+<script>
+
+    function clickDownload(aLink) {
+        var str = "栏位1,栏位2,栏位3\n值1,值2,值3";
+        str = encodeURIComponent(str);
+        aLink.href = "data:text/csv;charset=utf-8,\ufeff" + str;
+        aLink.click();
+    }
+
+    function csv() {
+
+
+
+        $("input[name=csvfile]").csv2arr(function (arr) {
+            console.log(arr);
+            //something to do here
+            var tblStr = "<table border='1'>";
+            $.each(arr, function (i, line) {
+                tblStr += "<tr>";
+                $.each(line, function (i, cell) {
+                    tblStr += "<td>" + cell + "</td>";
+                });
+                tblStr += "</tr>";
+            });
+            $("#resTbl").html(tblStr);
+        });
+    }
+</script>
+
+</html>

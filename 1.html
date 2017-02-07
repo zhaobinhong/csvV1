@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     
+     
+    <meta http-equiv="content-type" content="text/html" ; charset="utf-8">
+     
+    <meta name="author" content="oscar999">
+      <title>
+      </title>
+     
+    <script>
+        function clickDownload(aLink) {
+            var str = "栏位1,栏位2,栏位3\n值1,值2,值3";
+            str = encodeURIComponent(str);
+            aLink.href = "data:text/csv;charset=utf-8,\ufeff" + str;
+            aLink.click();
+        }
+
+
+        var arr1, arr2;
+        arr1 = [
+            ["正品ZIPPO打火机油正版美国zppo原装zip芝宝zp煤大油火石棉芯配件",
+                "2908",
+                "1"],
+            ["正品ZIPPO打火机油正版美国zppo原装zip芝宝zp煤大油火石棉芯配件",
+                "3908",
+                "2"],
+            ["正品ZIPPO打火机油正版美国zppo原装zip芝宝zp煤大油火石棉芯配件",
+                "4908",
+                "3"]
+        ];
+
+        arr2=[1,2,3];
+        for (var i=0;i<arr1.length;i++){
+            ( function (i) {
+                arr1[i][0]=arr2[i];
+            })(i);
+
+        }
+        console.log(arr1);
+    </script>
+     
+</head>
+ 
+<body>
+    <a id="test" onclick="clickDownload(this)" download="downlaod.csv" href="#">download</a>    
+ 
+</body>
+</html>

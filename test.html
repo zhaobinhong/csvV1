@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8"/>
+
+<script src="./lib/excellentexport.js"></script>
+<input type="file" name="csvfile" accept=".csv"/>
+<br/>
+<br/>
+
+<input type="button" onclick="csv()" value="JS转换"/>
+
+<textarea name="" id="titleText" cols="30" rows="10"></textarea>
+
+<!--<a id="test" onclick="csv(this)" download="downlaod.csv" href="#">download</a>    -->
+
+<br/>
+<a download="somedata.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', 'Sheet Name Here');">Export
+    to Excel</a>
+<br/>
+
+<a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV - UTF8</a>
+<br/>
+<a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable', ';');">Export to CSV - Using
+    semicolon ";" separator - UTF8</a>
+<br/>
+
+<br/><br/><br/>
+<div id="message"></div>
+<div id="fileOutput"></div>
+<div id="resTbl"></div>
+
+<script src="./lib/jquery.js"></script>
+<script src="./lib/papaparse.js"></script>
+<script src="./lib/jschardet.js"></script>
+<!--[if lte IE 9]>
+<script src="./lib/base64.js"></script>
+<![endif]-->
+
+<script src="./lib/csv2arr.js"></script>
+
+
+<script type="text/javascript">
+
+    var tit;
+    function csv() {
+
+        $("input[name=csvfile]").csv2arr(function (arr) {
+            var title = document.getElementById("titleText");
+            if (title.value == '') {
+                alert('请将500条标题写入文本框');
+                return;
+            }
+
+
+            //表格标头
+            function getTitle() {
+                var titleArr = [];
+                for (var fir = 0; fir < 3; fir++) {
+                    titleArr.push(arr[fir]);
+                }
+                return titleArr;
+            }
+
+//            表格除头外内容
+            function content() {
+                var arra = [];
+                for (var i = 3; i < arr.length; i++) {
+                    arra.push(arr[i])
+                }
+                return arra;
+            }
+
+
+//            生成500条
+            function copyArra() {
+                var arra = content();
+                var copyArr;
+                if (arra.length < 500) {
+
+                    while (arra.length < 500) {
+                        copyArr = arra.slice();
+                        arra = arra.concat(copyArr);
+                        if (arra.length >= 500) {
+                            var newarra = arra.slice(0, 500);
+                        }
+                    }
+                }
+                return newarra
+            }
+
+            function getTitleVal() {
+                var titleVal = title.value.split("\n");
+                if (titleVal.length >= 500) {
+                    titleVal.splice(500);
+                }
+                return titleVal
+            }
+
+
+            function getData() {
+                var newarra = copyArra();
+                var data = [], tit = getTitleVal();
+                for (var n = 0; n < newarra.length; n++) {
+                    data[n] = newarra[n];
+                    data[n][0] = tit[n];
+                }
+                return data
+            }
+
+
+//            合并
+            var or = getTitle().concat(getData());
+
+
+            var tblStr = "<table id='datatable' border='1'>";
+
+
+            var val;
+            $.each(or, function (i, line) {
+                tblStr += "<tr>";
+                if (i > 2) {
+                    val = getTitleVal();
+                    line[0] = val[i - 3];
+                }
+                $.each(line, function (i, cell) {
+                    tblStr += "<td>" + cell + "</td>";
+                });
+                tblStr += "</tr>";
+
+            });
+
+//            页面显示表格
+            $("#resTbl").html(tblStr);
+
+
+        });
+
+
+    }
+
+</script>
+
+</html>
