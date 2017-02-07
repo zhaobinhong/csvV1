@@ -193,8 +193,8 @@
             var val;
             $.each(or, function (i, line) {
                 tblStr += "<tr>";
+                val = getTitleVal();
                 if (i > 2) {
-                    val = getTitleVal();
                     line[0] = val[i - 3];
                 }
                 $.each(line, function (i, cell) {
