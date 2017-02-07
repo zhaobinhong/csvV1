@@ -163,7 +163,10 @@
                 var titleVal = title.value.split("\n");
                 if (titleVal.length >= 500) {
                     titleVal.splice(500);
+                }else {
+                    alert('txt标题不足500条');
                 }
+
                 return titleVal
             }
 
