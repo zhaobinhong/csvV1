@@ -58,7 +58,7 @@
 
 <p class="red">第一步：选择csv文件</p>
 <br>
-<input type="file" id="csvFile" name="csvfile" accept=".csv"/>
+<input type="file" name="csvfile" id="csvFile" accept=".csv"/>
 <br/>
 <br/>
 <p class="red">第二步：将标题文件（txt文件）粘贴至文本域</p>
@@ -82,10 +82,15 @@
 
 <br/>
 <p class="red">第四步：点击下载至本地</p>
+<!--<a download="somedata.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', 'Sheet Name Here');">Export-->
+    <!--to Excel</a>-->
 <br/>
-<a download="somedata.csv" id="down" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV -
-    UTF8</a>
+<br/>
+<a download="somedata.csv" id="down" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV - UTF8</a>
 <p class="red">（点击下载）</p>
+<br/>
+<!--<a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable', ';');">Export to CSV - Using-->
+    <!--semicolon ";" separator - UTF8</a>-->
 <br/>
 <br/>
 
@@ -106,10 +111,13 @@
 
 <script type="text/javascript">
     var down = document.getElementById('down');
-    down.onclick = function () {
-        var csvFile = document.getElementById('csvFile');
-        name = csvFile.files[0].name;
-        down.download = name;
+    var csvFile = document.getElementById('csvFile');
+    onclick = function () {
+        if (csvFile.value!=''){
+            name = csvFile.files[0].name;
+            down.download = name;
+        }
+
     }
 
     var tit;
@@ -163,7 +171,7 @@
                 var titleVal = title.value.split("\n");
                 if (titleVal.length >= 500) {
                     titleVal.splice(500);
-                } else {
+                }else {
                     alert('txt标题不足500条');
                     return;
                 }
@@ -195,9 +203,8 @@
                 tblStr += "<tr>";
                 val = getTitleVal();
                 if (i > 2) {
-
                     line[0] = val[i - 3];
-                    line[20] = line[20].toString();
+                    line[20]=line[20].replace(/</g,"&lt;").replace(/>/g,"&gt;");
                 }
                 $.each(line, function (i, cell) {
                     tblStr += "<td>" + cell + "</td>";

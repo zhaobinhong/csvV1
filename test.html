@@ -1,34 +1,104 @@
 <!DOCTYPE HTML>
 <html>
 <meta charset="utf-8"/>
+<style type="text/css">
+    * {
+        margin: 0;
+
+    }
+
+    body {
+        margin-top: 20px;
+
+        text-align: center;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .btn {
+        font: 15px Calibri, Arial, sans-serif;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+        text-decoration: none !important;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: baseline;
+        position: relative;
+        cursor: pointer;
+        padding: 10px 20px;
+        background-repeat: no-repeat;
+        background-position: bottom left;
+        background-position: bottom left, top right, 0 0, 0 0;
+        background-clip: border-box;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
+        -moz-box-shadow: 0 0 1px #fff inset;
+        -webkit-box-shadow: 0 0 1px #fff inset;
+        box-shadow: 0 0 1px #fff inset;
+        -webkit-transition: background-position 1s;
+        color: #0f4b6d !important;
+        border: 1px solid #84acc3 !important;
+        background-color: #48b5f2;
+    gradient( radial, 50 % 100 %, 0, 50 % 100 %, 100,
+    from(rgba(89, 208, 244, 1)), to(rgba(89, 208, 244, 0))),
+    -webkit-gradient(linear, 0 % 0 %, 0 % 100 %, from(#4fbbf7), to(#3faeeb));
+        font-size: 20px;
+    }
+
+    .btn::hover {
+
+    }
+</style>
 
 <script src="./lib/excellentexport.js"></script>
-<input type="file" name="csvfile" accept=".csv"/>
-<br/>
-<br/>
+<body>
 
-<input type="button" onclick="csv()" value="JS转换"/>
+
+<p class="red">第一步：选择csv文件</p>
+<br>
+<input type="file" id="csvFile" name="csvfile" accept=".csv"/>
+<br/>
+<br/>
+<p class="red">第二步：将标题文件（txt文件）粘贴至文本域</p>
+<br>
 
 <textarea name="" id="titleText" cols="30" rows="10"></textarea>
+
+<br/>
+<br/>
+<p class="red">第三步：点击【转换】按钮，等待两至三秒钟（待页面加载完成）</p>
+
+<br>
+<br>
+<input class="btn" type="button" onclick="csv()" value="转换"/>
+
+<br>
+<br>
+
 
 <!--<a id="test" onclick="csv(this)" download="downlaod.csv" href="#">download</a>    -->
 
 <br/>
-<a download="somedata.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', 'Sheet Name Here');">Export
-    to Excel</a>
-<br/>
+<p class="red">第四步：点击下载至本地</p>
 
-<a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV - UTF8</a>
+<br>
+<a download="somedata.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', 'Sheet Name Here');">Export to Excel</a>
 <br/>
-<a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable', ';');">Export to CSV - Using
-    semicolon ";" separator - UTF8</a>
+<br/>
+<a download="somedata.csv" id="down" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV -
+    UTF8</a>
+<p class="red">（点击下载）</p>
+<br/>
+<a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable', ';');">Export to CSV - Using semicolon ";" separator - UTF8</a>
 <br/>
 
 <br/><br/><br/>
 <div id="message"></div>
 <div id="fileOutput"></div>
 <div id="resTbl"></div>
-
+</body>
 <script src="./lib/jquery.js"></script>
 <script src="./lib/papaparse.js"></script>
 <script src="./lib/jschardet.js"></script>
@@ -40,6 +110,15 @@
 
 
 <script type="text/javascript">
+    var down = document.getElementById('down');
+    var csvFile = document.getElementById('csvFile');
+    onclick = function () {
+        if (csvFile.value!=''){
+            name = csvFile.files[0].name;
+            down.download = name;
+        }
+
+    }
 
     var tit;
     function csv() {
@@ -92,7 +171,11 @@
                 var titleVal = title.value.split("\n");
                 if (titleVal.length >= 500) {
                     titleVal.splice(500);
+                } else {
+                    alert('txt标题不足500条');
+                    return;
                 }
+
                 return titleVal
             }
 
@@ -118,9 +201,12 @@
             var val;
             $.each(or, function (i, line) {
                 tblStr += "<tr>";
+                val = getTitleVal();
                 if (i > 2) {
-                    val = getTitleVal();
+
                     line[0] = val[i - 3];
+
+                    line[20] = line[20].toString();
                 }
                 $.each(line, function (i, cell) {
                     tblStr += "<td>" + cell + "</td>";
