@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 <meta charset="utf-8"/>
-<title>csv数据编码</title>
 <style type="text/css">
     * {
         margin: 0;
@@ -51,71 +50,49 @@
     .btn::hover {
 
     }
-
-    #content {
-        display: none;
-    }
-
-    #password, #isok {
-        margin-top: 4em;
-    }
 </style>
 
 <script src="./lib/excellentexport.js"></script>
 <body>
-<input type="password" placeholder="请输入密码" id="password">
-<button id="isok">确定</button>
-
-<div id="content">
-    <p class="red">第一步：选择csv文件</p>
-    <br>
-    <input type="file" name="csvfile" id="csvFile" accept=".csv"/>
-    <br/>
-    <br/>
-    <p class="red">第二步：将标题文件（txt文件）粘贴至文本域</p>
-    <br>
-
-    <textarea name="" id="titleText" cols="30" rows="10"></textarea>
-
-    <br/>
-    <br>
-    <br>
-    <br>
-    <p>输入要生成的条数</p>
-    <br>
-    <input type="number" id="val" placeholder="请输入要生条数" value="500">
-    <br/>
-    <br>
-    <p class="red">第三步：点击【转换】按钮，等待两至三秒钟（待页面加载完成）</p>
-
-    <br>
-    <br>
-    <input class="btn" type="button" onclick="csv()" value="转换"/>
-
-    <br>
-    <br>
 
 
-    <!--<a id="test" onclick="csv(this)" download="downlaod.csv" href="#">download</a>    -->
+<p class="red">第一步：选择csv文件</p>
+<br>
+<input type="file" name="csvfile" id="csvFile" accept=".csv"/>
+<br/>
+<br/>
+<p class="red">第二步：将标题文件（txt文件）粘贴至文本域</p>
+<br>
 
-    <br/>
-    <p class="red">第四步：点击下载至本地</p>
-    <!--<a download="somedata.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', 'Sheet Name Here');">Export-->
+<textarea name="" id="titleText" cols="30" rows="10"></textarea>
+
+<br/>
+<br/>
+<p class="red">第三步：点击【转换】按钮，等待两至三秒钟（待页面加载完成）</p>
+
+<br>
+<br>
+<input class="btn" type="button" onclick="csv()" value="转换"/>
+
+<br>
+<br>
+
+
+<!--<a id="test" onclick="csv(this)" download="downlaod.csv" href="#">download</a>    -->
+
+<br/>
+<p class="red">第四步：点击下载至本地</p>
+<!--<a download="somedata.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', 'Sheet Name Here');">Export-->
     <!--to Excel</a>-->
-    <br/>
-    <br/>
-    <a download="somedata.csv" id="down" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV
-        - UTF8</a>
-    <p class="red">（点击下载）</p>
-    <br/>
-    <!--<a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable', ';');">Export to CSV - Using-->
+<br/>
+<br/>
+<a download="somedata.csv" id="down" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV - UTF8</a>
+<p class="red">（点击下载）</p>
+<br/>
+<!--<a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable', ';');">Export to CSV - Using-->
     <!--semicolon ";" separator - UTF8</a>-->
-    <br/>
-    <br/>
-
-
-</div>
-
+<br/>
+<br/>
 
 <br/><br/><br/>
 <div id="message"></div>
@@ -133,40 +110,23 @@
 
 
 <script type="text/javascript">
-
-    var pw = document.getElementById("password");
-    isok = document.getElementById("isok");
-    content = document.getElementById("content");
-
-    isok.onclick = function () {
-        if (pw.value == "csv963852741") {
-            content.style.display = "block";
-            isok.style.display = "none";
-            pw.style.display = "none";
-        } else {
-            alert('密码错误，请重新输入！')
-        }
-    };
-
-
     var down = document.getElementById('down');
     var csvFile = document.getElementById('csvFile');
     onclick = function () {
-        if (csvFile.value != '') {
+        if (csvFile.value!=''){
             name = csvFile.files[0].name;
             down.download = name;
         }
 
-    };
+    }
 
     var tit;
     function csv() {
-        var valu = document.getElementById("val").value;
 
         $("input[name=csvfile]").csv2arr(function (arr) {
             var title = document.getElementById("titleText");
             if (title.value == '') {
-                alert('请将' + valu + '条标题写入文本框');
+                alert('请将500条标题写入文本框');
                 return;
             }
 
@@ -194,13 +154,13 @@
             function copyArra() {
                 var arra = content();
                 var copyArr;
-                if (arra.length < valu) {
+                if (arra.length < 500) {
 
-                    while (arra.length < valu) {
+                    while (arra.length < 500) {
                         copyArr = arra.slice();
                         arra = arra.concat(copyArr);
-                        if (arra.length >= valu) {
-                            var newarra = arra.slice(0, valu);
+                        if (arra.length >= 500) {
+                            var newarra = arra.slice(0, 500);
                         }
                     }
                 }
@@ -209,10 +169,10 @@
 
             function getTitleVal() {
                 var titleVal = title.value.split("\n");
-                if (titleVal.length >= valu) {
-                    titleVal.splice(valu);
-                } else {
-                    alert('txt标题不足' + valu + '条');
+                if (titleVal.length >= 500) {
+                    titleVal.splice(500);
+                }else {
+                    alert('txt标题不足500条');
                     return;
                 }
 
@@ -244,7 +204,7 @@
                 val = getTitleVal();
                 if (i > 2) {
                     line[0] = val[i - 3];
-                    line[20] = line[20].replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    line[20]=line[20].replace(/</g,"&lt;").replace(/>/g,"&gt;");
                 }
                 $.each(line, function (i, cell) {
                     tblStr += "<td>" + cell + "</td>";
