@@ -144,7 +144,8 @@
             isok.style.display = "none";
             pw.style.display = "none";
         } else {
-            alert('密码错误，请重新输入！')
+            alert('密码错误，请重新输入！');
+            return false;
         }
     };
 
@@ -167,7 +168,7 @@
             var title = document.getElementById("titleText");
             if (title.value == '') {
                 alert('请将' + valu + '条标题写入文本框');
-                return;
+                return false;
             }
 
 
@@ -213,7 +214,7 @@
                     titleVal.splice(valu);
                 } else {
                     alert('txt标题不足' + valu + '条');
-                    return;
+                    return false;
                 }
 
                 return titleVal
