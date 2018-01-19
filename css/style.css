@@ -94,7 +94,7 @@ html {
 }
 
 textarea {
-    width: 600px;
+    width: 100%;
     background-color: #373737;
     height: 300px;
     padding-top: 10px;
