@@ -105,3 +105,13 @@ textarea {
     color: green;
     font-size: 16px;
 }
+
+footer{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    background-color: #26455f;
+    position: fixed;
+    bottom: 0px;
+}
