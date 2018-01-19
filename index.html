@@ -56,14 +56,24 @@
         display: none;
     }
 
+    .Absolute-center {
+        width: 100%;
+        height: 50px;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
 </style>
 
 <link rel="stylesheet" type="text/css" href="css/style.css">
 
 <script src="./lib/excellentexport.js"></script>
 <body>
-<input type="password" placeholder="请输入密码" id="password">
-<button id="isok" class="btn">确定</button>
+<div class="Absolute-center">
+    <input type="password" placeholder="请输入密码" id="password">
+    <button id="isok" class="btn">确定</button>
+</div>
+
 
 <div id="content">
     <p class="red">第一步：选择csv文件</p>
