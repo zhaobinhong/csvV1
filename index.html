@@ -9,8 +9,8 @@
     }
 
     body {
+        padding-top: 4em;
         margin-top: 20px;
-
         text-align: center;
     }
 
@@ -56,15 +56,14 @@
         display: none;
     }
 
-    #password, #isok {
-        margin-top: 4em;
-    }
 </style>
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
 <script src="./lib/excellentexport.js"></script>
 <body>
 <input type="password" placeholder="请输入密码" id="password">
-<button id="isok">确定</button>
+<button id="isok" class="btn">确定</button>
 
 <div id="content">
     <p class="red">第一步：选择csv文件</p>
@@ -81,7 +80,7 @@
     <br>
     <br>
     <br>
-    <p>输入要生成的条数</p>
+    <p class="red">输入要生成的条数</p>
     <br>
     <input type="number" id="val" placeholder="请输入要生条数" value="500">
     <br/>
@@ -263,6 +262,16 @@
 
     }
 
+    document.onkeydown = function(e){
+        if(!e){
+            e = window.event;
+        }
+        if((e.keyCode || e.which) == 13){
+            isok.onclick()
+        }
+    }
+
 </script>
+<script type="text/javascript" src="js/index.js"></script>
 
 </html>
