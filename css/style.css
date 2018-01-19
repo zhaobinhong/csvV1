@@ -85,6 +85,8 @@ input:focus:-ms-input-placeholder {
 }
 
 html, body {
+    width: 100%;
+    overflow-x: hidden;
     /*height: 100%;*/
     /*overflow: hidden;*/
 }
@@ -114,4 +116,5 @@ footer{
     background-color: #26455f;
     position: fixed;
     bottom: 0px;
+    left: 0px;
 }
